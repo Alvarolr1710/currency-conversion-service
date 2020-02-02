@@ -38,4 +38,32 @@ public class CurrencyConversionControllerTest extends IntegrationTestBase {
         assertThat(response.getBody().asString().contains("quantity"), Is.is(true));
         assertThat(response.getBody().asString().contains("conversionResult"), Is.is(true));
     }
+
+    @Test
+    public void shouldReturnCurrencyConversionUsingExchangeFeign() {
+        response = given().log().all()
+                .when().get("currency-converter-feign/from/USD/to/GBP/quantity/20000").thenReturn();
+        response.then().log().all();
+
+        assertThat(response.statusCode(), Is.is(HttpStatus.SC_OK));
+        assertThat(response.getBody().asString().contains("from"), Is.is(true));
+        assertThat(response.getBody().asString().contains("to"), Is.is(true));
+        assertThat(response.getBody().asString().contains("conversionValue"), Is.is(true));
+        assertThat(response.getBody().asString().contains("quantity"), Is.is(true));
+        assertThat(response.getBody().asString().contains("conversionResult"), Is.is(true));
+    }
+
+    @Test
+    public void shouldReturnCurrencyConversionUsingExchangeAPIFeign() {
+        response = given().log().all()
+                .when().get("currency-converter-feign-API/from/USD/to/GBP/quantity/20000").thenReturn();
+        response.then().log().all();
+
+        assertThat(response.statusCode(), Is.is(HttpStatus.SC_OK));
+        assertThat(response.getBody().asString().contains("from"), Is.is(true));
+        assertThat(response.getBody().asString().contains("to"), Is.is(true));
+        assertThat(response.getBody().asString().contains("conversionValue"), Is.is(true));
+        assertThat(response.getBody().asString().contains("quantity"), Is.is(true));
+        assertThat(response.getBody().asString().contains("conversionResult"), Is.is(true));
+    }
 }
